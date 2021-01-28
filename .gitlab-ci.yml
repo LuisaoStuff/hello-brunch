@@ -1,0 +1,13 @@
+default:
+  image: node:latest
+
+build-job:
+  stage: build
+  script:
+    - yarn
+    - yarn build
+
+deploy-job:
+  stage: deploy 
+  script:
+    - echo "Deploy"
