@@ -17,7 +17,7 @@ pipeline {
             }
             post {
                 always {
-                    recordIssues enabledForFailure: true, 0aggregatingResults:true, tool: trivy(pattern: 'trivy-*.json')
+                    recordIssues enabledForFailure: true, aggregatingResults:true, tool: trivy(pattern: 'trivy-*.json')
                 }
             }
         }
