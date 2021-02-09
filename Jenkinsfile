@@ -8,6 +8,12 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'docker-compose build'
+                sh 'trivy image --format json --output hello-brunch-report.json hello-brunch:1.0'
+            }
+            post {
+            always {
+                    recordIssues enabledForFailure: true, tool: trivy(pattern: 'hello-brunch-report.json')
+                }
             }
         }
         stage('Deploy') {
