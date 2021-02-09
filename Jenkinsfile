@@ -8,11 +8,16 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'docker-compose build'
+            }
+        }
+        stage('Security') {
+            steps {
+                sh 'trivy fs --format json --output hello-brunch-fs-report.json .'
                 sh 'trivy image --format json --output hello-brunch-report.json hello-brunch:1.0'
             }
             post {
-            always {
-                    recordIssues enabledForFailure: true, tool: trivy(pattern: 'hello-brunch-report.json')
+                always {
+                    recordIssues enabledForFailure: true, tool: trivy(pattern: '*.json')
                 }
             }
         }
