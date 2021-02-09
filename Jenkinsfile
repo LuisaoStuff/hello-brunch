@@ -12,12 +12,12 @@ pipeline {
         }
         stage('Security') {
             steps {
-                sh 'trivy fs --format json --output hello-brunch-fs-report.json .'
-                sh 'trivy image --format json --output hello-brunch-report.json hello-brunch:1.0'
+                sh 'trivy fs --format json --output trivy-hello-brunch-fs-report.json .'
+                sh 'trivy image --format json --output trivy-hello-brunch-report.json hello-brunch:1.0'
             }
             post {
                 always {
-                    recordIssues enabledForFailure: true, tool: trivy(pattern: '*.json')
+                    recordIssues enabledForFailure: true, 0aggregatingResults:true, tool: trivy(pattern: 'trivy-*.json')
                 }
             }
         }
