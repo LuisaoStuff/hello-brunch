@@ -32,6 +32,11 @@ pipeline {
                     }
                 }
             }
+        }
+        stage('Deploy'){
+                sshagent(['ssh-key-deploy']){
+                    sh 'ssh -t -o "StrictHostKeyChecking no" deploy@10.250.5.20 docker-compose pull && docker-compose up -d'
+                }
         }        
     }
 }
