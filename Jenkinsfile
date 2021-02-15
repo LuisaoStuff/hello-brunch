@@ -27,12 +27,11 @@ pipeline {
                     sh 'docker tag hello-brunch:latest 10.250.5.20:5050/luisaostuff/hello-brunch:BUILD-1.${BUILD_NUMBER}'
                     sh 'docker push 10.250.5.20:5050/luisaostuff/hello-brunch:BUILD-1.${BUILD_NUMBER}'
                 }
+                sshagent(['github_key']) {
+                    sh 'git tag BUILD-1.${BUILD_NUMBER}'
+                    sh 'git push --repo=ssh://git@10.250.5.20:2224/LuisaoStuff/hello-brunch.git origin HEAD:container-registry-test'
+                }
             }
-        }
-        sshagent(['github_key']) {
-            sh 'git tag BUILD-1.${BUILD_NUMBER}'
-            sh 'git push --repo=ssh://git@10.250.5.20:2224/LuisaoStuff/hello-brunch.git origin HEAD:container-registry-test'
-        }
-        
+        }        
     }
 }
