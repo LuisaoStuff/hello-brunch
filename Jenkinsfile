@@ -27,7 +27,7 @@ pipeline {
                     sh 'docker tag hello-brunch:latest 10.250.5.20:5050/luisaostuff/hello-brunch:BUILD-1.${BUILD_NUMBER}'
                     sh 'docker push 10.250.5.20:5050/luisaostuff/hello-brunch:BUILD-1.${BUILD_NUMBER}'
                     sh 'git tag BUILD-1.${BUILD_NUMBER}'
-                    sh 'git remote add http://10.250.5.20:8929/LuisaoStuff/hello-brunch.git'
+                    sh 'git remote add HEAD http://10.250.5.20:8929/LuisaoStuff/hello-brunch.git'
                     sh 'git push origin HEAD:container-registry-test'
                 }
             }
