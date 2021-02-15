@@ -22,7 +22,7 @@ pipeline {
             }
         }
         stage('Publish'){
-            steps{
+            steps {
                 withDockerRegistry(credentialsId: 'gitlab-registry', url: 'http://10.250.5.20:5050') {
                     sh 'docker tag hello-brunch:latest 10.250.5.20:5050/luisaostuff/hello-brunch:BUILD-1.${BUILD_NUMBER}'
                     sh 'docker push 10.250.5.20:5050/luisaostuff/hello-brunch:BUILD-1.${BUILD_NUMBER}'
@@ -34,9 +34,11 @@ pipeline {
             }
         }
         stage('Deploy'){
+            steps {
                 sshagent(['ssh-key-deploy']){
                     sh 'ssh -t -o "StrictHostKeyChecking no" deploy@10.250.5.20 docker-compose pull && docker-compose up -d'
                 }
+            }
         }        
     }
 }
