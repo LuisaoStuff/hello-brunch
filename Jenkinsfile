@@ -5,11 +5,6 @@ pipeline {
         ansiColor('xterm')
     }    
     stages {
-        stage('Build') {
-            steps {
-                sh 'docker-compose build'
-            }
-        }
         stage('Security') {
             steps {
                 sh 'trivy fs --format json --output trivy-hello-brunch-fs-report.json .'
@@ -21,9 +16,17 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        stage('Build') {
             steps {
-                sh 'docker-compose up -d'
+                sh 'docker-compose build'
+            }
+        }
+        stage('Publish'){
+            steps{
+                withDockerRegistry(credentialsId: 'gitlab-registry', url: 'http://10.250.5.20:5050') {
+                    sh 'docker tag hello-brunch:latest 10.250.5.20:5050/root/hello-brunch:latest'
+                    sh 'docker push 10.250.5.20:5050/root/hello-brunch:latest'
+                }
             }
         }
         
