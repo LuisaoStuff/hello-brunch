@@ -1,7 +1,7 @@
 version: "3.0"
 services:
   web:
-    image: hello-brunch:1.0
+    image: hello-brunch
     build: .
     ports:
       - "8080:80"
