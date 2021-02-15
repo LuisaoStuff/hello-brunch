@@ -24,8 +24,8 @@ pipeline {
         stage('Publish'){
             steps{
                 withDockerRegistry(credentialsId: 'gitlab-registry', url: 'http://10.250.5.20:5050') {
-                    sh 'docker tag hello-brunch:latest 10.250.5.20:5050/root/hello-brunch:latest'
-                    sh 'docker push 10.250.5.20:5050/root/hello-brunch:latest'
+                    sh 'docker tag hello-brunch:latest 10.250.5.20:5050/LuisaoStuff/hello-brunch:latest'
+                    sh 'docker push 10.250.5.20:5050/LuisaoStuff/hello-brunch:latest'
                 }
             }
         }
