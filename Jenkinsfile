@@ -33,8 +33,6 @@ pipeline {
                     sshagent(['github_key']) {
                         sh 'git tag BUILD-1.${BUILD_NUMBER}'
                         sh 'git push --tags'
-                        sh 'git tag latest'
-                        sh 'git push --tags'
                     }
                 }
             }
