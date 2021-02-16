@@ -7,3 +7,4 @@ RUN yarn build
 
 FROM nginx:latest
 COPY --from=nodebuild /build/public/ /usr/share/nginx/html/
+EXPOSE 80
