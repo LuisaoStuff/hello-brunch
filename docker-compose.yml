@@ -5,3 +5,16 @@ services:
     build: .
     ports:
       - "80:80"
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://10.250.5.20:5000"
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://10.250.5.20:3100/loki/api/v1/push"
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: "10.250.5.20:24224"
+        tag: httpd.access
